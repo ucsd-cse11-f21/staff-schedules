@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CSE11F21 Staff Schedules</title>
+    <style>
+      body {
+        font-family: Verdana;
+      }
+      table {
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      td {
+        height: 30px;
+        width: 90px;
+        border: 1px solid black;
+      }
+      .time {
+        position: relative;
+        top: -18px;
+        right: 5px;
+        text-align: right;
+        border: 0px;
+      }
+      #calendar {
+        float: left;
+        margin-top: 15px;
+      }
+      #col2 {
+        float: left;
+        margin: 60px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script>
+      var r = 1;
+      var i = 2;
+      var d = 3;
+      var l = 4;
+      var alex = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [r, 0, 0, 0, 0], //10am
+        [r, 0, 0, 0, 0],
+        [r, 0, 0, 0, r], //11am
+        [r, 0, 0, 0, r],
+        [0, 0, 0, 0, r], //12pm
+        [0, 0, 0, 0, r],
+        [0, 0, r, 0, 0], //1pm
+        [0, 0, r, 0, 0],
+        [l, i, r, 0, d], //2pm
+        [l, i, r, 0, d],
+        [i, 0, 0, 0, 0], //3pm
+        [i, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //4pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //5pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //6pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var amanda = [
+      // M  T  W  R  F
+        [0, 0, 0, r, 0], //9am
+        [0, 0, 0, r, 0],
+        [0, 0, 0, 0, l], //10am
+        [0, 0, 0, 0, l],
+        [0, i, 0, 0, 0], //11am
+        [0, i, 0, 0, 0],
+        [0, i, 0, 0, 0], //12pm
+        [0, i, 0, 0, 0],
+        [0, 0, 0, 0, r], //1pm
+        [0, 0, 0, 0, r],
+        [i, 0, 0, 0, r], //2pm
+        [i, 0, 0, 0, r],
+        [0, 0, 0, 0, 0], //3pm
+        [0, 0, 0, 0, 0],
+        [r, 0, 0, 0, 0], //4pm
+        [r, 0, 0, 0, 0],
+        [0, r, 0, 0, 0], //5pm
+        [0, r, 0, 0, 0],
+        [d, 0, 0, 0, 0], //6pm
+        [d, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var amy = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [0, i, 0, i, 0], //10am
+        [0, i, 0, i, 0],
+        [0, 0, 0, 0, 0], //11am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //1pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, l], //2pm
+        [0, 0, 0, 0, l],
+        [i, i, i, 0, r], //3pm
+        [i, i, i, 0, r],
+        [0, r, d, 0, r], //4pm
+        [0, r, d, 0, r],
+        [0, 0, 0, 0, 0], //5pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //6pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var ashley = [
+      // M  T  W  R  F
+        [d, 0, 0, 0, 0], //9am
+        [d, 0, 0, 0, 0],
+        [r, i, l, 0, r], //10am
+        [r, i, l, 0, r],
+        [0, i, 0, i, 0], //11am
+        [0, i, 0, i, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, 0, 0, 0, 0],
+        [r, 0, 0, 0, 0], //1pm
+        [r, 0, 0, 0, 0],
+        [r, 0, 0, 0, 0], //2pm
+        [r, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //3pm
+        [0, 0, 0, 0, 0],
+        [0, 0, d, 0, 0], //4pm
+        [0, 0, d, 0, 0],
+        [0, 0, 0, 0, 0], //5pm
+        [0, 0, 0, 0, 0],
+        [d, 0, 0, 0, 0], //6pm
+        [d, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var derek = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [l, 0, 0, 0, 0], //10am
+        [l, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //11am
+        [0, 0, 0, 0, 0],
+        [i, 0, 0, 0, 0], //12pm
+        [i, 0, 0, 0, 0],
+        [0, 0, 0, 0, i], //1pm
+        [0, 0, 0, 0, i],
+        [0, 0, 0, 0, i], //2pm
+        [0, 0, 0, 0, i],
+        [r, 0, 0, 0, 0], //3pm
+        [r, 0, 0, 0, 0],
+        [r, i, l, 0, l], //4pm
+        [r, i, l, 0, l],
+        [0, i, 0, 0, 0], //5pm
+        [0, i, 0, 0, 0],
+        [0, 0, 0, r, 0], //6pm
+        [0, 0, 0, r, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var duolan = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [l, 0, 0, 0, 0], //10am
+        [l, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //11am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, i, 0, 0, 0],
+        [0, i, i, 0, 0], //1pm
+        [0, i, i, 0, 0],
+        [0, 0, 0, 0, 0], //2pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //3pm
+        [0, 0, 0, 0, 0],
+        [0, r, l, 0, l], //4pm
+        [0, r, l, 0, l],
+        [0, r, 0, 0, r], //5pm
+        [i, r, 0, 0, r],
+        [i, 0, 0, 0, 0], //6pm
+        [i, 0, 0, 0, 0],
+        [0, 0, r, 0, 0], //7pm
+        [0, 0, r, 0, 0]
+      ];
+      var ellie = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //10am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //11am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, r, 0], //1pm
+        [0, 0, 0, r, 0],
+        [0, 0, 0, r, 0], //2pm
+        [0, 0, 0, r, 0],
+        [0, 0, 0, r, 0], //3pm
+        [0, 0, 0, r, 0],
+        [0, 0, 0, r, 0], //4pm
+        [0, 0, 0, r, 0],
+        [0, 0, i, r, 0], //5pm
+        [0, 0, i, r, 0],
+        [0, 0, i, 0, 0], //6pm
+        [0, 0, i, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var emily = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, r, 0], //10am
+        [0, 0, 0, r, 0],
+        [0, 0, 0, r, 0], //11am
+        [0, 0, 0, r, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, 0, 0, 0, 0],
+        [0, 0, d, 0, 0], //1pm
+        [0, 0, d, 0, 0],
+        [0, 0, 0, 0, 0], //2pm
+        [0, 0, 0, 0, 0],
+        [0, r, 0, 0, 0], //3pm
+        [0, r, 0, 0, 0],
+        [0, 0, r, 0, 0], //4pm
+        [0, 0, r, 0, 0],
+        [r, r, r, r, 0], //5pm
+        [r, r, r, r, 0],
+        [0, 0, 0, 0, 0], //6pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var eric = [
+      // M  T  W  R  F
+        [0, i, 0, r, 0], //9am
+        [0, i, 0, r, 0],
+        [0, 0, 0, 0, i], //10am
+        [0, 0, 0, 0, i],
+        [0, r, 0, 0, 0], //11am
+        [0, r, 0, 0, 0],
+        [0, 0, r, 0, 0], //12pm
+        [0, 0, r, 0, 0],
+        [r, 0, 0, i, 0], //1pm
+        [r, 0, 0, i, 0],
+        [0, 0, 0, 0, l], //2pm
+        [0, 0, 0, 0, l],
+        [r, 0, 0, 0, 0], //3pm
+        [r, 0, 0, 0, 0],
+        [l, 0, 0, 0, 0], //4pm
+        [l, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //5pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //6pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var erin = [
+      // M  T  W  R  F
+        [d, 0, 0, 0, 0], //9am
+        [d, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //10am
+        [0, 0, 0, 0, 0],
+        [r, 0, 0, 0, 0], //11am
+        [r, 0, 0, 0, 0],
+        [0, r, 0, r, 0], //12pm
+        [0, r, 0, r, 0],
+        [i, r, 0, r, 0], //1pm
+        [i, r, 0, r, 0],
+        [0, i, 0, 0, 0], //2pm
+        [0, i, 0, 0, 0],
+        [0, 0, 0, 0, 0], //3pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //4pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //5pm
+        [0, 0, 0, 0, 0],
+        [r, 0, 0, 0, 0], //6pm
+        [r, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var farnia = [
+            // M  T  W  R  F
+              [0, 0, 0, 0, 0], //9am
+              [0, 0, 0, 0, 0],
+              [i, 0, 0, 0, 0], //10am
+              [i, 0, 0, 0, 0],
+              [i, 0, r, 0, 0], //11am
+              [i, 0, r, 0, 0],
+              [0, 0, 0, 0, 0], //12pm
+              [0, 0, 0, 0, 0],
+              [0, 0, 0, 0, d], //1pm
+              [0, 0, 0, 0, d],
+              [l, 0, l, 0, 0], //2pm
+              [l, 0, l, 0, 0],
+              [0, 0, 0, 0, 0], //3pm
+              [0, 0, 0, 0, 0],
+              [0, r, 0, 0, r], //4pm
+              [0, r, 0, 0, r],
+              [r, 0, 0, 0, r], //5pm
+              [r, 0, 0, 0, r],
+              [r, 0, 0, 0, 0], //6pm
+              [r, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0], //7pm
+              [0, 0, 0, 0, 0]
+            ];
+      var jill = [
+            // M  T  W  R  F
+              [0, 0, 0, 0, 0], //9am
+              [0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0], //10am
+              [0, 0, 0, 0, 0],
+              [i, 0, 0, 0, 0], //11am
+              [i, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0], //12pm
+              [0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0], //1pm
+              [0, 0, 0, 0, 0],
+              [0, i, 0, r, 0], //2pm
+              [r, i, 0, r, 0],
+              [r, i, r, r, 0], //3pm
+              [r, i, r, r, 0],
+              [l, 0, l, 0, 0], //4pm
+              [l, 0, l, 0, 0],
+              [0, 0, 0, 0, 0], //5pm
+              [0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0], //6pm
+              [0, 0, 0, 0, 0],
+              [0, 0, 0, 0, 0], //7pm
+              [0, 0, 0, 0, 0]
+            ];
+      var kayvon =[
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [0, 0, l, i, 0], //10am
+        [0, 0, l, i, 0],
+        [0, 0, 0, 0, 0], //11am
+        [0, 0, 0, 0, 0],
+        [r, 0, 0, 0, 0], //12pm
+        [r, 0, 0, 0, 0],
+        [r, 0, d, 0, d], //1pm
+        [r, 0, d, 0, d],
+        [0, 0, 0, 0, r], //2pm
+        [0, 0, 0, 0, r],
+        [d, 0, 0, 0, r], //3pm
+        [d, 0, 0, 0, r],
+        [0, 0, 0, 0, 0], //4pm
+        [0, 0, 0, 0, 0],
+        [0, r, 0, 0, 0], //5pm
+        [0, r, 0, 0, 0],
+        [0, 0, 0, 0, 0], //6pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var maxwell = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [d, 0, r, 0, r], //10am
+        [d, 0, r, 0, r],
+        [d, 0, r, 0, 0], //11am
+        [d, 0, r, 0, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //1pm
+        [0, 0, 0, 0, 0],
+        [r, 0, 0, r, 0], //2pm
+        [r, 0, 0, r, 0],
+        [r, 0, 0, r, 0], //3pm
+        [r, 0, 0, r, 0],
+        [r, 0, 0, 0, 0], //4pm
+        [r, 0, 0, 0, 0],
+        [r, 0, 0, 0, 0], //5pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //6pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var melissa = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //10am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //11am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, 0, 0, 0, 0],
+        [0, i, 0, i, 0], //1pm
+        [0, i, 0, i, 0],
+        [0, r, l, r, 0], //2pm
+        [0, r, l, r, 0],
+        [0, i, 0, r, 0], //3pm
+        [0, i, 0, r, 0],
+        [0, 0, 0, 0, 0], //4pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //5pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //6pm
+        [0, 0, 0, 0, 0],
+        [r, 0, r, 0, 0], //7pm
+        [r, 0, r, 0, 0]
+      ];
+      var navya = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [l, 0, 0, 0, 0], //10am
+        [l, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //11am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, 0, 0, 0, 0],
+        [0, r, 0, 0, 0], //1pm
+        [0, r, 0, 0, 0],
+        [i, r, 0, 0, 0], //2pm
+        [i, r, 0, 0, 0],
+        [0, 0, 0, 0, r], //3pm
+        [0, 0, 0, 0, r],
+        [0, 0, 0, 0, d], //4pm
+        [0, 0, 0, 0, d],
+        [i, 0, 0, 0, 0], //5pm
+        [i, 0, 0, 0, 0],
+        [i, 0, 0, 0, 0], //6pm
+        [i, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var pawan = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, l], //10am
+        [0, 0, 0, 0, l],
+        [0, 0, 0, 0, 0], //11am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //1pm
+        [0, 0, 0, 0, 0],
+        [l, 0, 0, 0, 0], //2pm
+        [l, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //3pm
+        [0, 0, 0, 0, 0],
+        [i, i, 0, i, l], //4pm
+        [i, i, 0, i, l],
+        [r, i, 0, i, 0], //5pm
+        [r, i, 0, i, 0],
+        [r, 0, 0, 0, 0], //6pm
+        [r, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var rachel = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [0, r, l, 0, 0], //10am
+        [0, r, l, 0, 0],
+        [d, 0, 0, 0, 0], //11am
+        [d, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, 0, 0, 0, 0],
+        [0, 0, r, 0, 0], //1pm
+        [0, 0, r, 0, 0],
+        [0, i, 0, 0, 0], //2pm
+        [0, i, 0, 0, 0],
+        [0, i, 0, i, d], //3pm
+        [i, i, 0, i, d],
+        [i, 0, 0, i, d], //4pm
+        [i, 0, 0, 0, d],
+        [0, 0, 0, 0, 0], //5pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //6pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var rahul = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, l], //10am
+        [0, 0, 0, 0, l],
+        [r, 0, r, 0, 0], //11am
+        [r, 0, r, 0, 0],
+        [r, 0, r, 0, 0], //12pm
+        [r, 0, r, 0, 0],
+        [0, 0, 0, 0, 0], //1pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, i, 0], //2pm
+        [0, 0, 0, i, 0],
+        [d, r, 0, i, 0], //3pm
+        [d, r, 0, i, 0],
+        [0, r, 0, 0, 0], //4pm
+        [0, r, 0, 0, 0],
+        [0, 0, 0, 0, 0], //5pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //6pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var samarth = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [0, r, 0, 0, 0], //10am
+        [0, r, 0, 0, 0],
+        [0, r, 0, r, 0], //11am
+        [0, r, 0, r, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //1pm
+        [0, 0, 0, 0, 0],
+        [0, r, 0, 0, 0], //2pm
+        [0, r, 0, 0, 0],
+        [i, r, i, 0, d], //3pm
+        [i, r, i, 0, d],
+        [l, 0, 0, r, 0], //4pm
+        [l, 0, 0, r, 0],
+        [0, 0, 0, 0, 0], //5pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //6pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var sara = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [d, r, 0, 0, 0], //10am
+        [d, r, 0, 0, 0],
+        [0, r, 0, 0, 0], //11am
+        [0, r, 0, 0, 0],
+        [i, r, 0, 0, 0], //12pm
+        [i, r, 0, 0, 0],
+        [i, 0, 0, 0, r], //1pm
+        [i, 0, 0, 0, r],
+        [0, 0, 0, 0, d], //2pm
+        [0, 0, 0, 0, d],
+        [0, 0, 0, 0, 0], //3pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //4pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //5pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //6pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+      var shad = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //10am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //11am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, i], //1pm
+        [0, 0, 0, 0, i],
+        [0, 0, l, i, l], //2pm
+        [0, 0, l, i, l],
+        [0, 0, 0, 0, 0], //3pm
+        [0, 0, 0, 0, 0],
+        [0, i, 0, 0, 0], //4pm
+        [0, i, 0, 0, 0],
+        [0, i, 0, 0, 0], //5pm
+        [0, i, 0, 0, 0],
+        [0, 0, 0, i, 0], //6pm
+        [0, 0, 0, i, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+
+      var blank = [
+      // M  T  W  R  F
+        [0, 0, 0, 0, 0], //9am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //10am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //11am
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //12pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //1pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //2pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //3pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //4pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //5pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //6pm
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0], //7pm
+        [0, 0, 0, 0, 0]
+      ];
+
+      function showColors(person, name) {
+        document.getElementById("name").innerHTML = "⬅️ " + name;
+        let days = ["m", "t", "w", "r", "f"];
+        let times = ["9", "930", "10", "1030", "11", "1130", "12", "1230", "1", "130",
+                     "2", "230", "3", "330", "4", "430", "5", "530", "6", "630", "7", "730"];
+        for(let j = 0; j < 22; j++) {
+          for(let k = 0; k < 5; k++) {
+            let currId = days[k] + times[j];
+            if(person[j][k] == 1) { document.getElementById(currId).style.backgroundColor = 'yellow'; }
+            else if(person[j][k] == 2) { document.getElementById(currId).style.backgroundColor = 'MediumPurple'; }
+            else if(person[j][k] == 3) { document.getElementById(currId).style.backgroundColor = 'orange'; }
+            else if(person[j][k] == 4) { document.getElementById(currId).style.backgroundColor = 'blue'; }
+            else { document.getElementById(currId).style.backgroundColor = 'white'; }
+          }
+        }
+      }
+    </script>
+
+    <div id="names">
+      <button type="button" onclick="showColors(alex, 'Alex')">Alex</button>
+      <button type="button" onclick="showColors(amanda, 'Amanda')">Amanda</button>
+      <button type="button" onclick="showColors(amy, 'Amy')">Amy</button>
+      <button type="button" onclick="showColors(ashley, 'Ashley')">Ashley</button>
+      <button type="button" onclick="showColors(derek, 'Derek')">Derek</button>
+      <button type="button" onclick="showColors(duolan, 'Duolan')">Duolan</button>
+      <button type="button" onclick="showColors(ellie, 'Ellie')">Ellie</button>
+      <button type="button" onclick="showColors(emily, 'Emily')">Emily</button>
+      <button type="button" onclick="showColors(eric, 'Eric')">Eric</button>
+      <button type="button" onclick="showColors(erin, 'Erin')">Erin</button>
+      <button type="button" onclick="showColors(farnia, 'Farnia')">Farnia</button>
+      <button type="button" onclick="showColors(jill, 'Jill')">Jill</button>
+      <button type="button" onclick="showColors(kayvon, 'Kayvon')">Kayvon</button>
+      <button type="button" onclick="showColors(maxwell, 'Maxwell')">Maxwell</button>
+      <button type="button" onclick="showColors(melissa, 'Melissa')">Melissa</button>
+      <button type="button" onclick="showColors(navya, 'Navya')">Nayva</button>
+      <button type="button" onclick="showColors(pawan, 'Pawan')">Pawan</button>
+      <button type="button" onclick="showColors(rachel, 'Rachel')">Rachel</button>
+      <button type="button" onclick="showColors(rahul, 'Rahul')">Rahul</button>
+      <button type="button" onclick="showColors(samarth, 'Samarth')">Samarth</button>
+      <button type="button" onclick="showColors(sara, 'Sara')">Sara</button>
+      <button type="button" onclick="showColors(shad, 'Shad')">Shad</button>
+
+    </div>
+    <div id="calendar">
+      <table>
+        <tr>
+          <th> </th>
+          <th> Monday </th>
+          <th> Tuesday </th>
+          <th> Wednesday </th>
+          <th> Thursday </th>
+          <th> Friday </th>
+        </tr>
+        <tr id="9am">
+          <td class="time"> 9am</td> <td id="m9"></td> <td id="t9"></td> <td id="w9"></td> <td id="r9"></td> <td id="f9"></td>
+        </tr>
+        <tr id="930am">
+          <td class="time"></td> <td id="m930"></td> <td id="t930"></td> <td id="w930"></td> <td id="r930"></td> <td id="f930"></td>
+        </tr>
+        <tr id="10am">
+          <td class="time"> 10am</td> <td id="m10"></td> <td id="t10"></td> <td id="w10"></td> <td id="r10"></td> <td id="f10"></td>
+        </tr>
+        <tr id="1030am">
+          <td class="time"></td> <td id="m1030"></td> <td id="t1030"></td> <td id="w1030"></td> <td id="r1030"></td> <td id="f1030"></td>
+        </tr>
+        <tr id="11am">
+          <td class="time"> 11am</td> <td id="m11"></td> <td id="t11"></td> <td id="w11"></td> <td id="r11"></td> <td id="f11"></td>
+        </tr>
+        <tr id="1130am">
+          <td class="time"></td> <td id="m1130"></td> <td id="t1130"></td> <td id="w1130"></td> <td id="r1130"></td> <td id="f1130"></td>
+        </tr>
+        <tr id="12pm">
+          <td class="time"> 12pm</td> <td id="m12"></td> <td id="t12"></td> <td id="w12"></td> <td id="r12"></td> <td id="f12"></td>
+        </tr>
+        <tr id="1230pm">
+          <td class="time"></td> <td id="m1230"></td> <td id="t1230"></td> <td id="w1230"></td> <td id="r1230"></td> <td id="f1230"></td>
+        </tr>
+        <tr id="1pm">
+          <td class="time"> 1pm</td> <td id="m1"></td> <td id="t1"></td> <td id="w1"></td> <td id="r1"></td> <td id="f1"></td>
+        </tr>
+        <tr id="130pm">
+          <td class="time"></td> <td id="m130"></td> <td id="t130"></td> <td id="w130"></td> <td id="r130"></td> <td id="f130"></td>
+        </tr>
+        <tr id="2pm">
+          <td class="time"> 2pm</td> <td id="m2"></td> <td id="t2"></td> <td id="w2"></td> <td id="r2"></td> <td id="f2"></td>
+        </tr>
+        <tr id="230pm">
+          <td class="time"></td> <td id="m230"></td> <td id="t230"></td> <td id="w230"></td> <td id="r230"></td> <td id="f230"></td>
+        </tr>
+        <tr id="3pm">
+          <td class="time"> 3pm</td> <td id="m3"></td> <td id="t3"></td> <td id="w3"></td> <td id="r3"></td> <td id="f3"></td>
+        </tr>
+        <tr id="330pm">
+          <td class="time"></td> <td id="m330"></td> <td id="t330"></td> <td id="w330"></td> <td id="r330"></td> <td id="f330"></td>
+        </tr>
+        <tr id="4pm">
+          <td class="time"> 4pm</td> <td id="m4"></td> <td id="t4"></td> <td id="w4"></td> <td id="r4"></td> <td id="f4"></td>
+        </tr>
+        <tr id="430pm">
+          <td class="time"></td> <td id="m430"></td> <td id="t430"></td> <td id="w430"></td> <td id="r430"></td> <td id="f430"></td>
+        </tr>
+        <tr id="5pm">
+          <td class="time"> 5pm</td> <td id="m5"></td> <td id="t5"></td> <td id="w5"></td> <td id="r5"></td> <td id="f5"></td>
+        </tr>
+        <tr id="530pm">
+          <td class="time"></td> <td id="m530"></td> <td id="t530"></td> <td id="w530"></td> <td id="r530"></td> <td id="f530"></td>
+        </tr>
+        <tr id="6pm">
+          <td class="time"> 6pm</td> <td id="m6"></td> <td id="t6"></td> <td id="w6"></td> <td id="r6"></td> <td id="f6"></td>
+        </tr>
+        <tr id="630pm">
+          <td class="time"> </td> <td id="m630"></td> <td id="t630"></td> <td id="w630"></td> <td id="r630"></td> <td id="f630"></td>
+        </tr>
+        <tr id="7pm">
+          <td class="time"> 7pm</td> <td id="m7"></td> <td id="t7"></td> <td id="w7"></td> <td id="r7"></td> <td id="f7"></td>
+        </tr>
+        <tr id="730pm">
+          <td class="time"></td> <td id="m730"></td> <td id="t730"></td> <td id="w730"></td> <td id="r730"></td> <td id="f730"></td>
+        </tr>
+
+      </table>
+    </div>
+    <div id="col2">
+      <table id="key">
+        <tr> <td style="background-color: yellow"> Remote lab hours </td></tr>
+        <tr> <td style="background-color: MediumPurple"> In-person lab hours </td></tr>
+        <tr> <td style="background-color: orange"> Discussion </td></tr>
+        <tr> <td style="background-color: blue"> Lecture </td></tr>
+      </table>
+      <div id="name" style="margin-top: 80px"> </div>
+    </div>
+  </body>
+</html>
